@@ -11,21 +11,35 @@ mongoose
     .catch((err) => console.log(err));
 
 app.set("view engine", "ejs");
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
-    res.render("index");
+    res.redirect("/blogs");
 });
 
-app.get("/save-blog", (req, res) => {
-    const blog = new Blog({
-        title: "Blog Title",
-        snippet: "Blog Snippet",
-        body: "Blog Body abcxyzzz",
-    });
+app.get("/add-blog", (req, res) => {
+    res.render("add_form");
+});
+
+app.post("/save-blog", (req, res) => {
+    const blog = new Blog(req.body);
 
     blog.save()
         .then((result) => {
-            res.send(result);
+            // res.send(result);
+            res.redirect("/blogs");
         })
         .catch((err) => console.log(err));
+});
+
+app.get("/blogs", (req, res) => {
+    Blog.find()
+        .sort({ createdAt: -1 })
+        .then((result) => {
+            res.render("index", { blogs: result });
+        });
+});
+
+app.get("/blog", (req, res) => {
+    Blog.findById(req);
 });

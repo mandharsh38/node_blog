@@ -1,12 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Index</title>
-    </head>
-    <body>
-        Hello Brooo
-    </body>
+<%- include('head')%>
+<body>
+    <h1>Blogs</h1><hr>
+    <% blogs.forEach((blog, index) => { %>
+    <h3><%= blog['title'] %></h3>
+    <h4>Blog Snippet:<%= blog['snippet'] %></h4>
+    <p>Blog Body:<%= blog['body'] %></p><br><hr><br>
+    <% }) %>
+    <a href="add-blog">Add Blog</a>
+</body>
 </html>
